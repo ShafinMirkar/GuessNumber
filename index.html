@@ -3,128 +3,229 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GuessNumber</title>
+    <title>Guess Number Game</title>
     <style>
-        *{
-            margin: 0%;
-            padding: 0%;
+        * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
         }
-        body{
-            background-color: #fcf2d5;
-            color:aliceblue;
-            font-size: 2rem;
+        body {
+            background-color: #1e416a;
+            color: aliceblue;
+            text-shadow: 2px 2px aliceblue;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-size: 2rem; 
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             text-align: center;
+            padding: 1rem;
         }
-        #heading{
-            font-size: 3rem;
+        
+        #heading {
+            font-size: 2.5rem; 
+            font-weight: 700;
         }
-        .cont{
-            background-color: #beb18a;
-            border-radius: 3rem;
-            box-shadow: 0px 0px 20px 5px #706D54;
-            height: 80vh;
+
+        .cont {
+            background-color: #5ec1a7;
+            border-radius: 2rem;
+            box-shadow: 0px 0px 20px 5px #64cdb1;
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 2rem;
+            width: 100%;
+            max-width: 450px; 
+            box-sizing: border-box;
         }
-        .cont2{
-            margin: 2em;
+
+        .cont2 {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            gap: 1em;
+            gap: 1rem;
+            width: 100%;
         }
-        .btn{
-            height: 3em;
+
+        .btn {
+            height: 2.5rem; 
             width: auto;
             border: none;
             border-radius: 3rem;
             font-size: 1rem;
-            color: rgb(143, 122, 122);
+            color: rgb(108, 100, 100);
+            background-color: aliceblue;
             text-align: center;
-            padding: 10px 20px 10px 20px;
-
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            max-width: 90%; 
         }
-        #guess{
-            height: 3em;
-            width: 12em;
+
+        .btn:hover {
+            background-color: #64cdb1;
+        }
+
+        #guess:focus {
+            border: none;
+        }
+
+        #guess {
+            height: 2.5rem; 
+            width: 100%;
+            max-width: 15rem; 
             border: none;
             border-radius: 3rem;
-            font-size: 1rem;
+            font-size: 1.1rem; 
             text-align: center;
-            padding: 10px 20px 10px 20px;
+            padding: 10px 20px;
+            margin-top: 1rem;
         }
+        .hidden {
+            display: none;
+        }
+
+        @media screen and (max-width: 768px) {
+            body {
+                font-size: 1.5rem;
+            }
+
+
+            #heading {
+                font-size: 2rem; 
+            }
+            .btn {
+                font-size: 1.2rem;
+                padding: 12px 24px;
+                width: 80%;
+            }
+            #guess {
+                font-size: 1.3rem;
+                max-width: 80%;
+            }
+            .cont {
+                padding: 1.5rem;
+                width: 90%; 
+            }
+        }
+
+        
+        @media screen and (max-width: 480px) {
+            body {
+                font-size: 1.2rem;
+            }
+
+            .cont {
+                width: 95%;
+            }
+
+            #heading {
+                font-size: 1.5rem; 
+            }
+
+            .btn {
+                font-size: 1.4rem;
+                padding: 14px 28px;
+                width: 80%; 
+            }
+
+            #guess {
+                font-size: 1.4rem;
+                max-width: 80%;
+            }
+        }
+
+        @media screen and (min-width: 1200px) {
+            body {
+                font-size: 2rem; 
+            }
+
+            .cont {
+                width: 30%;
+                padding: 2.5rem;
+            }
+
+            .btn {
+                font-size: 1.2rem;
+            }
+
+            #guess {
+                font-size: 1.5rem;
+            }
+        }
+
     </style>
 </head>
 
 <body>
     <div class="cont">
         <div class="cont2">
-            <label for="guessNumber" id="heading">Guess a Number</label>
+            <label for="guessNumber" id="heading">Guess the Number</label>
             <p>Number is between 0 and 100</p>
+            <p class="hidden" style="color:rgb(211, 26, 26); font-weight:600;">Try Again!!</p>
             <input placeholder="Make your Guess" id="guess" type="text" min="0" max="100">
-            <button class="btn">Submit</button>
+            <button class="btn" type="submit">Submit</button>
             <p id="prev">Previous Guesses: </p>
             <p id="guessLeft">No. of guesses left: 10</p>
-            
         </div>
     </div>
     <script>
         let NoOfGuesses = 10;
-        let arr=[];
+        let arr = [];
         const ranNumber = generateNumber();
         const submit = document.body.querySelector('.btn');
+        const tryAgain = document.body.querySelector('.hidden');
+        console.log(ranNumber);
 
-        function generateNumber(){
-            return Math.floor((Math.random())*101);
+        function generateNumber() {
+            return Math.floor((Math.random()) * 101);
         }
 
-        function checkGuess(guess){
-            console.log(guess);
-            console.log(typeof guess);
-            if(isNaN(guess) || guess===''){
-                alert("enter valid number");
+        function checkGuess(guess) {
+            if (isNaN(guess) || guess === '') {
+                alert("Enter a valid number");
             }
-            else if(guess>100 || guess<0){
-                alert("enter number from 0 to 100");
+            else if (guess > 100 || guess < 0) {
+                alert("Enter a number from 0 to 100");
             }
-            else{
+            else {
                 mainKaam(guess);
             }
         }
-        
-        function mainKaam(guess){
+
+        function mainKaam(guess) {
             arr.push(guess);
             NoOfGuesses--;
-            document.body.querySelector('#prev').innerHTML=`<p>Previous Guesses: ${arr}</p>`;
-            document.body.querySelector('#guessLeft').innerHTML=`<p>No. of guesses left: ${NoOfGuesses}</p>`;
+            document.body.querySelector('#prev').innerHTML = `<p>Previous Guesses: ${arr}</p>`;
+            document.body.querySelector('#guessLeft').innerHTML = `<p>No. of guesses left: ${NoOfGuesses}</p>`;
             testCases(guess);
         }
-        
-        function testCases(guess){
-            if((NoOfGuesses<1 && ranNumber!=guess)){
-                alert(`You're out of Guesses, the number was ${ranNumber}`);
+
+        function testCases(guess) {
+            if ((NoOfGuesses < 1 && ranNumber != guess)) {
+                alert(`You're out of guesses, the number was ${ranNumber}`);
                 resetGame();
             }
-            else if(guess==ranNumber){
-                alert(`Congrats You've Won! The number was ${ranNumber}`);
+            else if (guess == ranNumber) {
+                alert(`Congrats! You've won! The number was ${ranNumber}`);
                 resetGame();
             }
-            else{//guess!==ranNumber
-                alert("Try Again!");
+            else { // guess !== ranNumber
+                tryAgain.classList.remove("hidden");
+                setTimeout(() => {
+                    tryAgain.classList.add("hidden");
+                }, 1000);
             }
         }
 
-        function resetGame(){
+        function resetGame() {
             alert("Let's play again");
-            submit.setAttribute("disabled","true");
-            const cont2 = document.body.querySelector('.cont2')
+            submit.setAttribute("disabled", "true");
+            const cont2 = document.body.querySelector('.cont2');
             const reset = document.createElement('submit');
             reset.textContent = "Reset Game";
             reset.classList.add("btn");
@@ -132,11 +233,11 @@
             cont2.appendChild(reset);
         }
 
-        submit.addEventListener('click',(e)=>{
+        submit.addEventListener('click', (e) => {
             e.preventDefault();
             const guess = parseInt(document.body.querySelector('#guess').value);
             checkGuess(guess);
-        })
-    </script>
+        });
+    </script>`
 </body>
 </html>
